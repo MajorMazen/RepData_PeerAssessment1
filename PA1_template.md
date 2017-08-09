@@ -77,7 +77,6 @@ activity2 <- activity
 activity= data.table::as.data.table(activity)
 activity[, msteps:= mean(steps, na.rm= T), by= interval]
 activity2$steps[NAs]= activity$msteps[NAs]
-##library(Hmisc); activity2$steps <- impute(activity$steps, FUN= mean) #filling spaces, mean is strictly the same
 ```
 
 Using the imputed activity data frame, the total number of steps per day is re-calculated and the plot is provided as follows:
