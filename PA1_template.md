@@ -15,19 +15,19 @@ The total number of steps is aggregated per day, for which the mean and median a
 
 
 ```r
-steps_day <- tapply(activity$steps, activity$date, sum, na.rm= T)
-c(mean(steps_day), median(steps_day))
+steps_day= aggregate(steps ~ date, data= activity, FUN= sum, na.rm= T)
+c(mean(steps_day$steps), median(steps_day$steps))
 ```
 
 ```
-## [1]  9354.23 10395.00
+## [1] 10766.19 10765.00
 ```
 
 Using the aggregated variable, a histogram plot of the total no of steps taken each day is created.
 
 
 ```r
-hist(steps_day, xlab = "No of Steps per day", ylab = "Frequency", main = "Frequency of total no of steps taken each day")
+hist(steps_day$steps, xlab = "No of Steps per day", ylab = "Frequency", main = "Frequency of total no of steps taken each day")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)<!-- -->
@@ -69,13 +69,13 @@ length(NAs)
 ## [1] 2304
 ```
 
-A new variable called activity2 is created equals to the original activity. As an alternative to looping through the NA records, replacing the 'steps' with their mean/median aggregated values at the respective date or interval (as given by steps_interval variable). Using data tables, the median values of steps are aggregated and replicated at each given interval of the day in a new column called msteps. to which NA steps in activity2 are mapped and replaced by.
+A new variable called activity2 is created equals to the original activity. As an alternative to looping through the NA records, replacing the 'steps' with their mean/median aggregated values at the respective date or interval (as given by steps_interval variable). Using data tables, the mean values of steps are aggregated and replicated at each given interval of the day in a new column called msteps. to which NA steps in activity2 are mapped and replaced by.
 
 
 ```r
 activity2 <- activity
 activity= data.table::as.data.table(activity)
-activity[, msteps:= median(steps, na.rm= T), by= interval]
+activity[, msteps:= mean(steps, na.rm= T), by= interval]
 activity2$steps[NAs]= activity$msteps[NAs]
 ##library(Hmisc); activity2$steps <- impute(activity$steps, FUN= mean) #filling spaces, mean is strictly the same
 ```
@@ -90,14 +90,14 @@ hist(steps_day2$steps, xlab = "No of Steps per day", ylab = "Frequency", main = 
 
 ![](PA1_template_files/figure-html/unnamed-chunk-8-1.png)<!-- -->
 
-The median is unchanged, while the mean has shifted from the original NA-omitted data values. 
+The mean is unchanged, while the median has slightly shifted from the original NA-omitted data values. 
 
 ```r
 c(mean(steps_day2$steps), median(steps_day2$steps))
 ```
 
 ```
-## [1]  9503.869 10395.000
+## [1] 10766.19 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
