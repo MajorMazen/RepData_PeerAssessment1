@@ -83,5 +83,5 @@ activity2$weekday= weekdays(activity2$date)
 activity2$weekday= factor(grepl("S(at|un)",activity2$weekday), levels= c(T,F), labels= c("weekend","weekday"))
 steps_interval2= aggregate(steps ~ interval + weekday, data= activity2, FUN= mean, na.rm= T)
 library(ggplot2)
-ggplot(steps_interval2, aes(interval, steps)) + geom_line() + facet_grid(.~weekday) + ggtitle("Total steps per interval in weekends and weekdays")
+ggplot(steps_interval2, aes(interval, steps)) + geom_line() + facet_grid(.~weekday) + ggtitle("Average no.of steps per interval in weekends and weekdays")
 ```

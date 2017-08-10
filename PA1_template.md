@@ -117,7 +117,7 @@ library(ggplot2)
 ```
 
 ```r
-ggplot(steps_interval2, aes(interval, steps)) + geom_line() + facet_grid(.~weekday) + ggtitle("Total steps per interval in weekends and weekdays")
+ggplot(steps_interval2, aes(interval, steps)) + geom_line() + facet_grid(.~weekday) + ggtitle("Average no.of steps per interval in weekends and weekdays")
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-10-1.png)<!-- -->
